@@ -1,8 +1,11 @@
 // npm i @types/object-hash
 import hashLib = require('object-hash');
 import { Block } from './block';
+import { Log } from "../utils/log";
 
 export class Miner {
+
+    private tag = "Miner";
 
     public mineBlock(index: number, difficulty: number, data: string, previousHash: string) {
 
@@ -13,10 +16,10 @@ export class Miner {
         for (var i = 0; i < difficulty; i++) {
             start += "0";
         }
-        console.log(start);
+        
         do {
             hash = hashLib.sha1(nonce + data + previousHash);
-            console.log(hash);
+            Log.info(this.tag, hash);
             nonce++;
         } while (hash.substr(0, difficulty) != start)
 

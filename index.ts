@@ -4,10 +4,19 @@ import { Log, LOG_LEVEL } from "./utils/log";
 import { Chain } from "./blockchain/chain"
 import { Miner } from "./blockchain/miner"
 import { BlockMaker } from "./network/blockmaker"
+import { Node } from "./network/node"
 
 Log.level = LOG_LEVEL.ALL;
-var host = "localhost";
-var port = 8191;
+
+const host = "localhost";
+const port = 8191;
+
+var startupType = "";
+var miner : Miner;
+var chain : Chain;
+
+var blockmaker;
+var node;
 
 var blockDataQuestions = [
     {
@@ -48,33 +57,35 @@ var requestStartupType = function() {
 }
 
 var startUp = function() {
+
     if (startupType == "BlockMaker") {
-        blockmaker = new BlockMaker();
+
+        // get an instance of our BlockMaker server.
+        //blockmaker = BlockMaker.getInstance(host, port);
+
+        // initialize the miner
+        miner = new Miner();
+
+        // initialize the blockchain with the required genesis data
+        chain = new Chain(miner.mineBlock(0, 1, "GENESIS", "NONE"));
+        chain.print();
+
         requestBlockData();
+
     } else {
+
         node = new Node();
     }
 }
 
 var requestBlockData = function() {
+
     inquirer.prompt(blockDataQuestions).then(function(answers:any) {
         var previousBlock = chain.getLastBlock();
         chain.addBlock(miner.mineBlock(previousBlock.index + 1, answers.difficulty, answers.data, previousBlock.hash));
         chain.print();
+
     }).then(requestBlockData);
 }
-
-// start as Server or Client
-var startupType = "";
-
-// initialize the miner
-var miner = new Miner();
-
-var blockmaker;
-var node;
-
-// initialize the blockchain with the required genisis data
-var chain = new Chain(miner.mineBlock(0, 1, "GENISIS", "NONE"));
-chain.print();
 
 requestStartupType();
