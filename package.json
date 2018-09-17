@@ -1,0 +1,21 @@
+{
+  "name": "miniblockchain",
+  "version": "1.0.0",
+  "description": "Mini Blockchain",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -w -pretty",
+    "exe": "node build/index.js"
+  },
+  "author": "Daniel de Witte",
+  "license": "ISC",
+  "dependencies": {
+    "@types/inquirer": "0.0.43",
+    "@types/object-hash": "^1.2.0",
+    "inquirer": "^6.2.0",
+    "object-hash": "^1.3.0"
+  },
+  "devDependencies": {
+    "typescript": "^3.0.3"
+  }
+}
