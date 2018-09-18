@@ -6,7 +6,7 @@ import { Miner } from "./blockchain/miner"
 import { BlockMaker } from "./network/blockmaker"
 import { Node } from "./network/node"
 
-Log.level = LOG_LEVEL.ALL;
+Log.level = LOG_LEVEL.WARN;
 
 const host = "localhost";
 const port = 8191;
@@ -53,7 +53,7 @@ var serverQuestion = [
 var requestStartupType = function() {
     inquirer.prompt(serverQuestion).then(function(answers:any) {
         startupType = answers.type;
-    }).then(startUp) // start a recursive function to ask for input data turn it into a new block that is added to the blockchain
+    }).then(startUp) 
 }
 
 var startUp = function() {
@@ -61,7 +61,7 @@ var startUp = function() {
     if (startupType == "BlockMaker") {
 
         // get an instance of our BlockMaker server.
-        //blockmaker = BlockMaker.getInstance(host, port);
+        blockmaker = BlockMaker.getInstance(host, port);
 
         // initialize the miner
         miner = new Miner();
@@ -70,6 +70,7 @@ var startUp = function() {
         chain = new Chain(miner.mineBlock(0, 1, "GENESIS", "NONE"));
         chain.print();
 
+        // start a recursive function to ask for input data turn it into a new block that is added to the blockchain
         requestBlockData();
 
     } else {

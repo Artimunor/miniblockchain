@@ -16,6 +16,8 @@ export class Miner {
         for (var i = 0; i < difficulty; i++) {
             start += "0";
         }
+
+        Log.info(this.tag, "Start with mining Block "+index+" with difficulty "+difficulty);
         
         do {
             hash = hashLib.sha1(nonce + data + previousHash);

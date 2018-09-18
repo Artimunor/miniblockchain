@@ -19,7 +19,7 @@ export class BlockMaker {
         this.nodeEvents(this.server);
     }
 
-    static getInstance(host: string, port: number) {
+    public static getInstance(host: string, port: number) {
         if (!BlockMaker.instance) {
             BlockMaker.instance = new BlockMaker(host, port);
         }

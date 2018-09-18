@@ -1,9 +1,9 @@
 export const LOG_LEVEL = {
-    ERROR:  0x01,   // 0001
-    WARN:   0x02,   // 0010
-    INFO:   0x04,   // 0100
-    DEBUG:  0x08,   // 1000
-    ALL:    0xff,   // 1111
+    ERROR:  0x01,
+    WARN:   0x02,
+    INFO:   0x04,
+    DEBUG:  0x08,
+    ALL:    0xff,
 };
 
 export class Log {
