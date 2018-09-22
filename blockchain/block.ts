@@ -43,6 +43,15 @@ export class Block {
         return st;
     }
 
+    public serialize() {
+        var json = '{"index":' + this._index;
+        json += ', "nonce":"' + this._nonce + '"';
+        json += ', "data":"' + this._data + '"';
+        json += ', "hash":"' + this._hash + '"';
+        json += ', "previousHash":"' + this._previousHash + '"}';
+        return json
+    }
+
     public print() {
         console.log("");
         console.log("┎─BLOCK "+this.pad(String(this.index),40, "─")+"─────────┒");

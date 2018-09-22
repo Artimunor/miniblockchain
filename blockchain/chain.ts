@@ -2,7 +2,7 @@ import { Block } from "./block"
 
 export class Chain {
 
-    private blockChain : Block[];
+    public blockChain : Block[];
 
     constructor(genesis: Block) {
         this.blockChain = [genesis];

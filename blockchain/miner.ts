@@ -5,10 +5,9 @@ import { Log } from "../utils/log";
 
 export class Miner {
 
-    private tag = "Miner";
+    public static mineBlock(index: number, difficulty: number, data: string, previousHash: string) {
 
-    public mineBlock(index: number, difficulty: number, data: string, previousHash: string) {
-
+        var tag = "Miner";
         var start: string = "";
         var hash: string = "";
         var nonce: number = 0;
@@ -17,11 +16,11 @@ export class Miner {
             start += "0";
         }
 
-        Log.info(this.tag, "Start with mining Block "+index+" with difficulty "+difficulty);
+        Log.info(tag, "Start with mining Block "+index+" with difficulty "+difficulty);
         
         do {
             hash = hashLib.sha1(nonce + data + previousHash);
-            Log.info(this.tag, hash);
+            Log.info(tag, hash);
             nonce++;
         } while (hash.substr(0, difficulty) != start)
 
