@@ -28,9 +28,9 @@ export class BlockMaker {
         return BlockMaker.instance;
     }
 
-    public pushBlock(block: Block) {
+    public pushBlocks() {
         this.nodes.forEach((socket: net.Socket) => {
-            socket.write(block.serialize());
+            socket.write(this.chain.getLastBlock().serialize()+"|");
         });
     }
 
@@ -51,12 +51,8 @@ export class BlockMaker {
         server.on('connection', (socket: net.Socket) => {
             this.nodes.push(socket);
             Log.info(this.tag, 'a new Node has connected to the network, there are now ' + this.nodes.length + ' node(s) connected.');
-            
-            socket.on('ready', (socket: net.Socket) => {
-                console.log(this.chain.blockChain.length);
-                this.chain.blockChain.forEach((block: Block) => {
-                    socket.write(this.chain.getLastBlock);
-                });
+            this.chain.blockChain.forEach((block: Block) => {
+                socket.write(block.serialize()+"|");
             });
         });
     }

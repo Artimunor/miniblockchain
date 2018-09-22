@@ -1,4 +1,4 @@
-import * as net from "net";
+import net = require("net");
 import { Log } from "../utils/log";
 import { Chain } from "../blockchain/chain"
 import { Block } from "../blockchain/block"
@@ -43,13 +43,18 @@ export class Node {
 
         this.client.on('data', (data: string) => {
             Log.info(this.tag, 'data received from server: ' + data);
-            var blockData = JSON.parse(data); 
-            var block = new Block(blockData.index, blockData.nonce, blockData.data, blockData.hash, blockData.previousHash)
-            if (this.chain == null) {
-                this.chain = new Chain(block);
-            } else {
-                this.chain.addBlock(block);
-            }
+            var parts = data.toString().split("|");
+            parts.forEach((part:string) => {
+                if (part.length > 0) {
+                    var blockData = JSON.parse(part); 
+                    var block = new Block(blockData.index, blockData.nonce, blockData.data, blockData.hash, blockData.previousHash)
+                    if (this.chain == null) {
+                        this.chain = new Chain(block);
+                    } else {
+                        this.chain.addBlock(block);
+                    }
+                }
+            });
             this.chain.print();
         });
     }
