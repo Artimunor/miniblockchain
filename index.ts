@@ -60,14 +60,16 @@ var startUp = function() {
     if (startupType == "BlockMaker") {
 
         // initialize the blockchain with the required genesis data
-        chain = new Chain(Miner.mineBlock(0, 1, "GENESIS", "NONE"));
-        chain.print();
+        Miner.mineBlock(0, 1, "GENESIS", "NONE").then((genesis) => {
 
-        // get an instance of the BlockMaker server.
-        blockmaker = BlockMaker.getInstance(host, port, chain);
+            chain = new Chain(genesis);
+            chain.print();
+            // get an instance of the BlockMaker server.
+            blockmaker = BlockMaker.getInstance(host, port, chain);
 
-        // start a recursive function to ask for input data turn it into a new block that is added to the blockchain
-        requestBlockData();
+            // start a recursive function to ask for input data turn it into a new block that is added to the blockchain
+            requestBlockData();
+        });
 
     } else {
 
@@ -79,9 +81,13 @@ var requestBlockData = function() {
 
     inquirer.prompt(blockDataQuestions).then(function(answers:any) {
         var previousBlock = chain.getLastBlock();
-        chain.addBlock(Miner.mineBlock(previousBlock.index + 1, answers.difficulty, answers.data, previousBlock.hash));
-        chain.print();
-        blockmaker.pushBlocks();
+
+        Miner.mineBlock(previousBlock.index + 1, answers.difficulty, answers.data, previousBlock.hash).then((block) => {
+            chain.addBlock(block);
+            chain.print();
+            blockmaker.pushBlocks();
+        });
+
     }).then(requestBlockData);
 }
 
