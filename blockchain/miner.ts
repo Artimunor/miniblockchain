@@ -1,18 +1,19 @@
 // npm i @types/object-hash
 import hashLib = require('object-hash');
+
 import { Block } from './block';
 import { Log } from "../utils/log";
 
 export class Miner {
 
-    public static mineBlock(index: number, difficulty: number, data: string, previousHash: string) : Promise <Block> {
+    public static mineBlock(index: number, difficulty: number, data: string, previousHash: string) : Promise <string> {
 
         var tag = "Miner";
         var start: string = "";
         var hash: string = "";
         var nonce: number = 0;
 
-        return new Promise<Block>((resolve) => {
+        return new Promise<string>((resolve) => {
 
             for (var i = 0; i < difficulty; i++) {
                 start += "0";
@@ -26,7 +27,7 @@ export class Miner {
                 nonce++;
             } while (hash.substr(0, difficulty) != start)
 
-            resolve(new Block(index, nonce, data, hash, previousHash));
+            resolve(hash);
         });
     }
 }
