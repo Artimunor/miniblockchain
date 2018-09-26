@@ -1,7 +1,5 @@
 // npm i @types/object-hash
 import hashLib = require('object-hash');
-
-import { Block } from './block';
 import { Log } from "../utils/log";
 
 export class Miner {

@@ -3,12 +3,11 @@ import inquirer = require('inquirer');
 import cluster = require('cluster');
 
 import { Log, LOG_LEVEL } from "./utils/log";
+import { Block } from './blockchain/block';
 import { Chain } from "./blockchain/chain"
 import { Miner } from "./blockchain/miner"
 import { BlockMaker } from "./network/blockmaker"
 import { Node } from "./network/node"
-import { Block } from './blockchain/block';
-
 
 Log.level = LOG_LEVEL.DEBUG;
 
