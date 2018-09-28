@@ -11,7 +11,7 @@ export class BlockMaker {
     private server: net.Server;
     private chain: Chain;
     private nodes: net.Socket[] = [];
-
+ 
     private static instance: BlockMaker;
     private constructor(host: string, port: number, chain: Chain) { 
         this.host = host;
