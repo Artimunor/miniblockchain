@@ -50,7 +50,7 @@ export class BlockMaker {
 
         server.on('connection', (socket: net.Socket) => {
             this.nodes.push(socket);
-            Log.info(this.tag, 'a new Node has connected to the network, there are now ' + this.nodes.length + ' node(s) connected.');
+            Log.info(this.tag, 'There are now ' + this.nodes.length + ' node(s) connected.');
             this.chain.blockChain.forEach((block: Block) => {
                 socket.write(block.serialize()+"|");
             });

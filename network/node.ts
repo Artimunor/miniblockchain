@@ -45,7 +45,7 @@ export class Node {
             var parts = data.toString().split("|");
             parts.forEach((part:string) => {
                 if (part.length > 0) {
-                    this.chain.addBlockFromJson(JSON.parse(part));
+                    this.chain.addBlock(JSON.parse(part));
                 }
             });
         });

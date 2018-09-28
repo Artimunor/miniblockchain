@@ -2,6 +2,8 @@ import { Block } from "./block"
 
 export class Chain {
 
+    public static genesisData = "GENESIS"
+
     public blockChain : Block[];
 
     constructor() {
@@ -12,12 +14,7 @@ export class Chain {
         return this.blockChain[this.blockChain.length-1];
     }
 
-    public addBlock(block: Block) {
-        this.blockChain.push(block);
-        this.print();
-    }
-
-    public addBlockFromJson(block: any) {
+    public addBlock(block: any) {
         this.blockChain.push(new Block(block.index, block.nonce, block.data, block.hash, block.previousHash));
         this.print();
     }

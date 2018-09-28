@@ -1,5 +1,3 @@
-import hashLib = require('object-hash');
-
 export class Block {
 
     private _hash: string;

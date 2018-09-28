@@ -9,7 +9,7 @@ import { requestDifficulty, requestBlockData} from "../utils/interaction"
 
 export class Miner {
 
-    public static mineBlock(index: number, difficulty: number, data: string, previousHash: string) : Promise <Block> {
+    public static mineBlock(index: number, difficulty: number, data: string, previousHash: string) : Promise<Block> {
 
         var tag = "Miner";
         var start: string = "";
@@ -34,13 +34,13 @@ export class Miner {
         });
     }
 
-    public static createMineWorker = function(chain: Chain, blockmaker: BlockMaker) {
+    public static createMineWorker (chain: Chain, blockmaker: BlockMaker) {
 
         var mineWorker = cluster.fork({alias: 'miner'})
         var difficulty = 0;
     
-        mineWorker.on('message', function(newBlock) {
-            chain.addBlockFromJson(newBlock);
+        mineWorker.on('message', (newBlock) => {
+            chain.addBlock(newBlock);
             blockmaker.pushBlocks();
             requestBlockData(difficulty, chain, mineWorker);
         });
@@ -54,6 +54,23 @@ export class Miner {
                     });
                 }, 1000);
             }
+        });
+    }
+
+    public static mineEvents() {
+        
+        process.on('message', function(mineRequest) {
+
+            Miner.mineBlock(mineRequest.index, mineRequest.difficulty, mineRequest.data, mineRequest.previousBlockHash).then((newBlock) => {
+
+                (<any> process).send({
+                    index: newBlock.index,
+                    nonce: newBlock.nonce,
+                    data: newBlock.data,
+                    hash: newBlock.hash,
+                    previousHash: newBlock.previousHash
+                });
+            });
         });
     }
 }

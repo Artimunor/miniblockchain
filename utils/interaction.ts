@@ -24,7 +24,7 @@ var blockDataQuestion = [{
         default: 'some data'
 }]
 
-export let requestStartupType = function() : Promise<string> {
+export let requestStartupType = () : Promise<string> => {
     return new Promise<string>(resolve => {
         inquirer.prompt(serverQuestion).then(function(answers:any) {
             return resolve(answers.type);
@@ -32,7 +32,7 @@ export let requestStartupType = function() : Promise<string> {
     });
 }
 
-export let requestDifficulty = function() : Promise<number>  {
+export let requestDifficulty = () : Promise<number> => {
     return new Promise<number>(resolve => {
         inquirer.prompt(difficultyQuestion).then(function(answers:any) {
             return resolve(answers.difficulty);
@@ -40,23 +40,20 @@ export let requestDifficulty = function() : Promise<number>  {
     });
 }
 
-export let requestBlockData = function(difficulty: number, chain: Chain, miner: Worker) {
-
+export let requestBlockData = (difficulty: number, chain: Chain, miner: Worker) => {
+    
     if (chain.blockChain.length == 0) {
-
         miner.send({
             index: 0,
             difficulty: difficulty,
-            data: "GENESIS",
-            previousBlockHash: "NONE"
+            data: Chain.genesisData,
+            previousBlockHash: "-"
         });
 
     } else {
 
-        inquirer.prompt(blockDataQuestion).then(function(answers:any) {
-
+        inquirer.prompt(blockDataQuestion).then((answers:any) => {
             var previousBlock = chain.getLastBlock();
-
             miner.send({
                 index: previousBlock.index + 1,
                 difficulty: difficulty,
