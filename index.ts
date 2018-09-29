@@ -31,9 +31,9 @@ if (cluster.isMaster) {
 
 } else {
 
-    Log.info(tag, 'Worker process started with pid', process.pid, 'and alias', "'"+process.env.alias+"'");
+    Log.info(tag, 'Worker process started with pid', process.pid, 'and alias', `'${process.env.alias}'`);
 
-    if (process.env.alias === 'miner') {
+    if (process.env.alias === 'mineworker') {
 
         Miner.mineEvents();
 

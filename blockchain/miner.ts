@@ -1,6 +1,5 @@
-// 
-import hashLib = require('object-hash');
-import cluster = require('cluster');
+import crypto from 'crypto';
+import cluster from 'cluster';
 import { Log } from "../utils/log";
 import { Block } from './block';
 import { Chain } from "./chain"
@@ -25,7 +24,7 @@ export class Miner {
             Log.info(tag, "Start with mining Block", index, "with difficulty", difficulty);
             
             do {
-                hash = hashLib.sha1(nonce + data + previousHash);
+                hash = this.getSHA256Hash(nonce + data + previousHash);
                 Log.info(tag, hash);
                 nonce++;
             } while (hash.substr(0, difficulty) != start)
@@ -36,7 +35,7 @@ export class Miner {
 
     public static createMineWorker (chain: Chain, blockmaker: BlockMaker) {
 
-        var mineWorker = cluster.fork({alias: 'miner'})
+        var mineWorker = cluster.fork({alias: 'mineworker'})
         var difficulty = 0;
     
         mineWorker.on('message', (newBlock) => {
@@ -61,7 +60,7 @@ export class Miner {
         
         process.on('message', function(mineRequest) {
 
-            Miner.mineBlock(mineRequest.index, mineRequest.difficulty, mineRequest.data, mineRequest.previousBlockHash).then((newBlock) => {
+            Miner.mineBlock(mineRequest.index, mineRequest.difficulty, mineRequest.data, mineRequest.previousBlockHash).then((newBlock: Block) => {
 
                 (<any> process).send({
                     index: newBlock.index,
@@ -72,5 +71,9 @@ export class Miner {
                 });
             });
         });
+    }
+
+    public static getSHA256Hash = function(data: string) {
+        return crypto.createHash('sha256').update(data).digest('hex');
     }
 }

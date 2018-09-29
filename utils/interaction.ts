@@ -7,7 +7,7 @@ var serverQuestion = [{
     name: 'type',
     message: 'Run as: ',
     choices: ['BlockMaker', 'Node'],
-    default: 'Node'
+    default: 'BlockMaker'
 }]
 
 var difficultyQuestion = [{

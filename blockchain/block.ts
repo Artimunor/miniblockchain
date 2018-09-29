@@ -52,11 +52,11 @@ export class Block {
 
     public print() {
         console.log("");
-        console.log("┎─BLOCK "+this.pad(String(this.index),40, "─")+"─────────┒");
-        console.log("┃  Previous:   " + this.pad(this.previousHash,42," ")  +"┃");
-        console.log("┃  Nonce:      " + this.pad(String(this.nonce),42," ") +"┃");
-        console.log("┃  Data:       " + this.pad(this.data,42, " ")         +"┃");
-        console.log("┃  Hash:       " + this.pad(this.hash,42, " ")         +"┃");
-        console.log("┖────────────────────────────────────────────────────────┚");
+        console.log("┎─BLOCK "+this.pad(String(this.index),62, "─")+"──────────┒");
+        console.log("┃  Previous:  " + this.pad(this.previousHash,64," ")  +"  ┃");
+        console.log("┃  Nonce:     " + this.pad(String(this.nonce),64," ") +"  ┃");
+        console.log("┃  Data:      " + this.pad(this.data,64, " ")         +"  ┃");
+        console.log("┃  Hash:      " + this.pad(this.hash,64, " ")         +"  ┃");
+        console.log("┖───────"+this.pad("─",47, "─")+"─────────────────────────┚");
     }
 }
