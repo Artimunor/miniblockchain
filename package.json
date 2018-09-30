@@ -9,7 +9,7 @@
     "exe": "node build/index.js"
   },
   "author": "Daniel de Witte",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@types/inquirer": "0.0.43",
     "inquirer": "^6.2.0"

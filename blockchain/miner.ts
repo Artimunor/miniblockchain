@@ -10,7 +10,7 @@ export class Miner {
 
     public static mineBlock(index: number, difficulty: number, data: string, previousHash: string) : Promise<Block> {
 
-        var tag = "Miner";
+        var tag: string = "Miner";
         var start: string = "";
         var hash: string = "";
         var nonce: number = 0;

@@ -8,7 +8,7 @@ import { Miner } from "./blockchain/miner"
 
 Log.level = LOG_LEVEL.DEBUG;
 
-const tag = "Main";
+const tag: string = "Main";
 const host = "localhost";
 const port = 8191;
 
