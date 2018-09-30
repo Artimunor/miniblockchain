@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc -w -pretty",
+    "test": "jasmine-ts \"test/**/*.spec.ts\"",
     "exe": "node build/index.js"
   },
   "author": "Daniel de Witte",
@@ -14,6 +15,8 @@
     "inquirer": "^6.2.0"
   },
   "devDependencies": {
+    "@types/jasmine": "^2.8.8",
+    "jasmine-ts": "^0.2.1",
     "typescript": "^3.0.3"
   }
 }

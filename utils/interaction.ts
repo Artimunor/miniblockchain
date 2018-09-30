@@ -1,4 +1,4 @@
-import inquirer = require('inquirer');
+import Inquirer from 'inquirer';
 import { Worker } from 'cluster';
 import { Chain } from '../blockchain/chain';
 
@@ -26,7 +26,7 @@ var blockDataQuestion = [{
 
 export let requestStartupType = () : Promise<string> => {
     return new Promise<string>(resolve => {
-        inquirer.prompt(serverQuestion).then(function(answers:any) {
+        Inquirer.prompt(serverQuestion).then(function(answers:any) {
             return resolve(answers.type);
         });
     });
@@ -34,7 +34,7 @@ export let requestStartupType = () : Promise<string> => {
 
 export let requestDifficulty = () : Promise<number> => {
     return new Promise<number>(resolve => {
-        inquirer.prompt(difficultyQuestion).then(function(answers:any) {
+        Inquirer.prompt(difficultyQuestion).then(function(answers:any) {
             return resolve(answers.difficulty);
         });
     });
@@ -52,7 +52,7 @@ export let requestBlockData = (difficulty: number, chain: Chain, miner: Worker) 
 
     } else {
 
-        inquirer.prompt(blockDataQuestion).then((answers:any) => {
+        Inquirer.prompt(blockDataQuestion).then((answers:any) => {
             var previousBlock = chain.getLastBlock();
             miner.send({
                 index: previousBlock.index + 1,

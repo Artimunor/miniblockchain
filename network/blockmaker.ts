@@ -1,23 +1,23 @@
-import net = require("net");
+import Net from "net";
 import { Log } from "../utils/log";
 import { Chain } from "../blockchain/chain"
 import { Block } from "../blockchain/block"
 
 export class BlockMaker {
 
-    private tag = 'BlockMaker';
+    private tag: string = "BlockMaker";
     private port: number;
     private host: string;
-    private server: net.Server;
+    private server: Net.Server;
     private chain: Chain;
-    private nodes: net.Socket[] = [];
+    private nodes: Net.Socket[] = [];
  
     private static instance: BlockMaker;
     private constructor(host: string, port: number, chain: Chain) { 
         this.host = host;
         this.port = port;
         this.chain = chain;
-        this.server = net.createServer();
+        this.server = Net.createServer();
         this.serverEvents(this.server);
     }
 
@@ -29,28 +29,28 @@ export class BlockMaker {
     }
 
     public pushBlocks() {
-        this.nodes.forEach((socket: net.Socket) => {
+        this.nodes.forEach((socket: Net.Socket) => {
             socket.write(this.chain.getLastBlock().serialize()+"|");
         });
     }
 
-    private serverEvents(server: net.Server) {
+    private serverEvents(server: Net.Server) {
 
         server.listen(this.port, this.host, () => {
-            Log.info(this.tag, 'blockmaker listening on', this.host, ':', this.port);
+            Log.info(this.tag, "blockmaker listening on", this.host, ':', this.port);
         });
 
-        server.on('error', (err: any) => {
-            if (err.code == 'EADDRINUSE') {
-                Log.error(this.tag, 'address in use.');
+        server.on("error", (err: any) => {
+            if (err.code == "EADDRINUSE") {
+                Log.error(this.tag, "address in use.");
             } else {
                 Log.error(this.tag, err.toString());
             }
         });
 
-        server.on('connection', (socket: net.Socket) => {
+        server.on("connection", (socket: Net.Socket) => {
             this.nodes.push(socket);
-            Log.info(this.tag, 'There are now ' + this.nodes.length + ' node(s) connected.');
+            Log.info(this.tag, "There are now " + this.nodes.length + " node(s) connected.");
             this.chain.blockChain.forEach((block: Block) => {
                 socket.write(block.serialize()+"|");
             });

@@ -1,7 +1,7 @@
-import crypto from 'crypto';
-import cluster from 'cluster';
+import crypto from "crypto";
+import cluster from "cluster";
 import { Log } from "../utils/log";
-import { Block } from './block';
+import { Block } from "./block";
 import { Chain } from "./chain"
 import { BlockMaker } from "../network/blockmaker"
 import { requestDifficulty, requestBlockData} from "../utils/interaction"
@@ -35,16 +35,16 @@ export class Miner {
 
     public static createMineWorker (chain: Chain, blockmaker: BlockMaker) {
 
-        var mineWorker = cluster.fork({alias: 'mineworker'})
+        var mineWorker = cluster.fork({alias: "mineworker"})
         var difficulty = 0;
     
-        mineWorker.on('message', (newBlock) => {
+        mineWorker.on("message", (newBlock) => {
             chain.addBlock(newBlock);
             blockmaker.pushBlocks();
             requestBlockData(difficulty, chain, mineWorker);
         });
 
-        cluster.on('online', (worker) => {
+        cluster.on("online", (worker) => {
             if (worker == mineWorker) {
                 setTimeout(() => {
                     requestDifficulty().then((difficultyChoice) => {
@@ -58,7 +58,7 @@ export class Miner {
 
     public static mineEvents() {
         
-        process.on('message', function(mineRequest) {
+        process.on("message", function(mineRequest) {
 
             Miner.mineBlock(mineRequest.index, mineRequest.difficulty, mineRequest.data, mineRequest.previousBlockHash).then((newBlock: Block) => {
 
@@ -74,6 +74,6 @@ export class Miner {
     }
 
     public static getSHA256Hash = function(data: string) {
-        return crypto.createHash('sha256').update(data).digest('hex');
+        return crypto.createHash("sha256").update(data).digest("hex");
     }
 }
