@@ -42,7 +42,7 @@ export class Block {
     }
 
     public serialize() {
-        var json = '{"index":' + this._index;
+        let json = '{"index":' + this._index;
         json += ', "nonce":' + this._nonce;
         json += ', "data":"' + this._data + '"';
         json += ', "hash":"' + this._hash + '"';

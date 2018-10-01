@@ -6,15 +6,14 @@ import { Node } from "./network/node"
 import { Chain } from "./blockchain/chain"
 import { Miner } from "./blockchain/miner"
 
-Log.level = LOG_LEVEL.DEBUG;
+Log.level = LOG_LEVEL.ALL;
 
 const tag: string = "Main";
 const host = "localhost";
 const port = 8191;
+const chain : Chain = new Chain();
 
-var chain : Chain = new Chain();
-
-var startUp = function(startupType: string) {
+let startUp = function(startupType: string) {
 
     if (startupType == "BlockMaker") {
         Miner.createMineWorker(chain, BlockMaker.getInstance(host, port, chain));

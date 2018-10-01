@@ -10,14 +10,14 @@ export class Miner {
 
     public static mineBlock(index: number, difficulty: number, data: string, previousHash: string) : Promise<Block> {
 
-        var tag: string = "Miner";
-        var start: string = "";
-        var hash: string = "";
-        var nonce: number = 0;
+        const tag: string = "Miner";
+        let start: string = "";
+        let hash: string = "";
+        let nonce: number = 0;
 
         return new Promise<Block>((resolve) => {
 
-            for (var i = 0; i < difficulty; i++) {
+            for (let i = 0; i < difficulty; i++) {
                 start += "0";
             }
 
@@ -35,8 +35,8 @@ export class Miner {
 
     public static createMineWorker (chain: Chain, blockmaker: BlockMaker) {
 
-        var mineWorker = cluster.fork({alias: "mineworker"})
-        var difficulty = 0;
+        const mineWorker = cluster.fork({alias: "mineworker"})
+        let difficulty = 0;
     
         mineWorker.on("message", (newBlock) => {
             chain.addBlock(newBlock);
