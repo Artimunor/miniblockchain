@@ -1,6 +1,6 @@
 import "jasmine";
-import {Miner} from "../../blockchain/miner"
-import {Block} from "../../blockchain/block"
+import {Miner} from "../../src/blockchain/miner"
+import {Block} from "../../src/blockchain/block"
 
 describe("Chain", () => {
     describe("mineBlock()", () => {

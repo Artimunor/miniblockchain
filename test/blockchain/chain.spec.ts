@@ -1,6 +1,6 @@
 import "jasmine";
-import {Chain} from "../../blockchain/chain"
-import {Block} from "../../blockchain/block"
+import {Chain} from "../../src/blockchain/chain"
+import {Block} from "../../src/blockchain/block"
 
 describe("Chain", () => {
 

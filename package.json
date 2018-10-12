@@ -1,8 +1,8 @@
 {
   "name": "miniblockchain",
-  "version": "1.0.0",
+  "version": "0.0.8",
   "description": "Mini Blockchain",
-  "main": "index.js",
+  "main": "build/index.js",
   "scripts": {
     "build": "tsc -w -pretty",
     "test": "jasmine-ts \"test/**/*.spec.ts\"",

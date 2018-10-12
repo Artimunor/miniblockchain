@@ -1,5 +1,5 @@
 import "jasmine";
-import {Block} from "../../blockchain/block"
+import {Block} from "../../src/blockchain/block"
 
 describe("Block", () => {
 

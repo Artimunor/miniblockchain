@@ -24,12 +24,20 @@ let blockDataQuestion = [{
         default: 'some data'
 }]
 
-export async function requestStartupType(): Promise<string> {
-    return (await <Promise<any>>Inquirer.prompt(serverQuestion)).type;
+export let requestStartupType = () : Promise<string> => {
+    return new Promise<string>(resolve => {
+        Inquirer.prompt(serverQuestion).then(function(answers:any) {
+            return resolve(answers.type);
+        });
+    });
 }
 
-export async function requestDifficulty(): Promise<number> {
-    return (await <Promise<any>>Inquirer.prompt(difficultyQuestion)).difficulty;
+export let requestDifficulty = () : Promise<number> => {
+    return new Promise<number>(resolve => {
+        Inquirer.prompt(difficultyQuestion).then(function(answers:any) {
+            return resolve(answers.difficulty);
+        });
+    });
 }
 
 export async function requestBlockData(difficulty: number, chain: Chain, miner: Worker) {
