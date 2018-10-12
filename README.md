@@ -4,13 +4,13 @@
 * npm install
 
 ## Build
-* npm run-script build
+* npm run build
 
 ## Test
 * npm test
 
 ## Run
-* npm run-script exe
+* npm run exe
 
 ## Usage
 * Run the blockchain with 'npm run-script exe' on a commandline.
